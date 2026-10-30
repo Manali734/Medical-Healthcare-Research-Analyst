@@ -28,16 +28,30 @@ pipeline {
 
         stage('4. Deploy Application') {
             steps {
-                bat 'docker compose up -d'
-            }
+            withCredentials([
+            string(
+                credentialsId: 'groq-api-key',
+                variable: 'GROQ_API_KEY'
+            )
+        ]) {
+            bat '''
+                @echo off
+                > .env echo GROQ_MODEL=openai/gpt-oss-120b
+                >> .env echo GROQ_API_KEY=%GROQ_API_KEY%
+
+                docker compose up -d
+            '''
         }
+    }
+}
 
         stage('5. Verify Deployment') {
             steps {
-                bat 'docker compose ps'
-            }
-        }
+            bat 'docker compose ps'
+            bat 'docker ps'
     }
+}
+        }
 
     post {
         success {
@@ -46,6 +60,9 @@ pipeline {
 
         failure {
             echo 'Pipeline failed. Check Console Output.'
+        }
+        always {
+        bat '@if exist .env del /q .env'
         }
     }
 }
