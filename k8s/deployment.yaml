@@ -1,0 +1,49 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: medical-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: medical-assistant
+  template:
+    metadata:
+      labels:
+        app: medical-assistant
+    spec:
+      containers:
+        - name: api
+          image: host.docker.internal:5000/medical-healthcare-assistant:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: medical-assistant-config
+          env:
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: medical-assistant-secret
+                  key: GROQ_API_KEY
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

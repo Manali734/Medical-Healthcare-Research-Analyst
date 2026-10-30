@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Educational healthcare and medical research assistant">
+  <title>MedResearch AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="mark">+</div>
+      <div><p class="eyebrow">MULTI-AGENT HEALTHCARE ASSISTANT</p><h1>MedResearch AI</h1></div>
+      <span class="status"><span class="dot"></span> Educational mode</span>
+    </header>
+    <section class="hero">
+      <p class="eyebrow">RESEARCH · EXPLAIN · REVIEW</p>
+      <h2>Understand health information with more clarity.</h2>
+      <p class="sub">Ask a general healthcare or medical research question. Three AI agents analyze the question, consult the project's reference library, and review the response.</p>
+    </section>
+    <section class="panel">
+      <label for="question">Your question</label>
+      <textarea id="question" rows="4" maxlength="2000" placeholder="Example: What information should I prepare before a routine medical consultation?"></textarea>
+      <div class="controls"><span id="counter">0 / 2000</span><button id="askButton">Analyze question <span aria-hidden="true">→</span></button></div>
+      <div class="suggestions">
+        <button class="chip" data-question="What information should a patient prepare before a routine medical consultation?">Prepare for a consultation</button>
+        <button class="chip" data-question="How can I evaluate the reliability and limitations of a medical research paper?">Evaluate a research paper</button>
+        <button class="chip" data-question="What are good practices for finding reliable health information?">Reliable health information</button>
+      </div>
+    </section>
+    <section id="resultPanel" class="panel result hidden" aria-live="polite">
+      <div class="result-head"><h3>Reviewed response</h3><span id="resultStatus">Ready</span></div>
+      <div id="answer" class="answer"></div>
+      <h4>Sources and limitations</h4><ul id="sources"></ul>
+      <p id="disclaimer" class="disclaimer"></p>
+    </section>
+    <footer>For education and research support only. Not for diagnosis or emergency decisions.</footer>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
