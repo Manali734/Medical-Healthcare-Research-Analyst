@@ -11,12 +11,14 @@ pipeline {
             }
         }
 
+        
         stage('2. Python Validation') {
             steps {
-                bat 'python --version'
-                bat 'python -m compileall app'
+                bat '"C:\\Users\\Manali\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" --version'
+                bat '"C:\\Users\\Manali\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m compileall app'
             }
         }
+
 
         stage('3. Build Docker Image') {
             steps {
